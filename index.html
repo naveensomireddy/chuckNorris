@@ -25,11 +25,24 @@
             text-align: center;
             color: white;
         }
+        #buzzwords, #target {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            text-align: center;            
+            color: black;
+            font-size: 1.5em;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
     </style>
 </head>
 <body>
     <div id="banner" class="p-4">Loading joke...</div>
-    <div class="content">Enjoy your Chuck Norris jokes!</div>
+    
+    <div id="buzzwords" class="p-4">Loading corporate buzzwords...</div>
+
+    <div id="target" class="p-4">Loading target...</div>
     
     <script>
         async function fetchJoke() {
@@ -41,9 +54,25 @@
                 document.getElementById("banner").innerText = "Failed to load joke. Try again later!";
             }
         }
-        
+
+        async function fetchBuzzwords() {
+            try {
+                let response = await fetch("https://corporatebs-generator.sameerkumar.website/");
+                let data = await response.json();
+                document.getElementById("buzzwords").innerText = data.phrase;
+            } catch (error) {
+                document.getElementById("buzzwords").innerText = "Failed to load corporate buzzwords. Try again later!";
+            }
+        }
+        async function fetchTarget() {
+            document.getElementById("target").innerText = "$300,000 by next year";
+        }
+
         fetchJoke(); // Load joke on page load
+        fetchBuzzwords(); // Load buzzwords on page load
+        fetchTarget();
         setInterval(fetchJoke, 30000); // Refresh joke every 30 seconds
+        setInterval(fetchBuzzwords, 360000); // Refresh buzzwords every 6 minutes
     </script>
 </body>
 </html>
